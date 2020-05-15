@@ -8,6 +8,7 @@ package tshirtsort;
 import java.util.List;
 import tshirtsort.factories.TShirtFactory;
 import tshirtsort.models.TShirt;
+import tshirtsort.sorting.BubbleSort;
 import tshirtsort.sorting.QuickSort;
 
 /**
@@ -23,6 +24,8 @@ public class MainClass {
         TShirtFactory tFactory = new TShirtFactory();
         List<TShirt> shirts = tFactory.tShirtGenerateX(3);
         QuickSort qs = new QuickSort();
+        BubbleSort bs = new BubbleSort();
+        // BucketSort bus = new BucketSort();
 
         for (TShirt shirt : shirts) {
             System.out.println(shirt);
@@ -35,6 +38,8 @@ public class MainClass {
         
         quickSort(qs, shirts, true, 3); // Fabric ASC
         quickSort(qs, shirts, false, 3); // Fabric DESC
+        
+        
         
 
     }
@@ -86,4 +91,8 @@ public class MainClass {
             System.out.println(shirt);
         }
     }
+    
+    // bubleSort
+    
+    // bucketSort
 }
