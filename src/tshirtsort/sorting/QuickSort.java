@@ -16,32 +16,46 @@ public class QuickSort {
     
     // low = arr.get(low), low = 4
     // high = arr.get(high), high = 0
-    public void sort(List<TShirt> arr, int low, int high) {
+    // boolean sortType, sortType == true, ASC --  sortType == false, DESC
+    public void sort(List<TShirt> arr, int low, int high, boolean sortType) {
         if (low < high) {
             /* pi is partitioning index, arr[pi] is  
               now at right place */
-            int pi = partition(arr, low, high);
+            int pi = partition(arr, low, high, sortType);
 
             // Recursively sort elements before 
             // partition and after partition 
-            sort(arr, low, pi - 1);
-            sort(arr, pi + 1, high);
+            sort(arr, low, pi - 1, sortType);
+            sort(arr, pi + 1, high, sortType);
         }
     }
 
-    int partition(List<TShirt> arr, int low, int high) {
+    // boolean sortType, sortType == true, ASC --  sortType == false, DESC
+    int partition(List<TShirt> arr, int low, int high, boolean sortType) {
         TShirt pivot = arr.get(high);
         int i = (low - 1); // index of smaller element 
         for (int j = low; j < high; j++) {
             // If current element is smaller than the pivot 
-            if (arr.get(j).getSize().ordinal() < pivot.getSize().ordinal()) {
-                i++;
+            if(sortType) {
+                if (arr.get(j).getSize().ordinal() < pivot.getSize().ordinal()) {
+                    i++;
 
-                // swap arr[i] and arr[j] 
-                TShirt temp = arr.get(i);
-                arr.set(i, arr.get(j));
-                arr.set(j, temp);
+                    // swap arr[i] and arr[j] 
+                    TShirt temp = arr.get(i);
+                    arr.set(i, arr.get(j));
+                    arr.set(j, temp);
+                }
+            } else {
+                if (arr.get(j).getSize().ordinal() > pivot.getSize().ordinal()) {
+                    i++;
+
+                    // swap arr[i] and arr[j] 
+                    TShirt temp = arr.get(i);
+                    arr.set(i, arr.get(j));
+                    arr.set(j, temp);
+                }
             }
+            
         }
 
         // swap arr[i+1] and arr[high] (or pivot) 

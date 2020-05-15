@@ -8,6 +8,7 @@ package tshirtsort;
 import java.util.List;
 import tshirtsort.factories.TShirtFactory;
 import tshirtsort.models.TShirt;
+import tshirtsort.sorting.QuickSort;
 
 /**
  *
@@ -21,10 +22,31 @@ public class MainClass {
     public static void main(String[] args) {
         TShirtFactory tFactory = new TShirtFactory();
         List<TShirt> shirts = tFactory.tShirtGenerateX(10);
+        QuickSort qs = new QuickSort();
+        
+        for (TShirt shirt : shirts) {
+            System.out.println(shirt);
+        }
+        quickSort(qs, shirts, true);
+        quickSort(qs, shirts, false);
+        
+        
+    }
+    
+    public static void quickSort(QuickSort qs, List<TShirt> shirts, boolean sortType) {
+        System.out.println("/// --------- ///");
+        long startTime = System.currentTimeMillis();
+        qs.sort(shirts, 0, shirts.size() - 1, sortType);
+        long endTime = System.currentTimeMillis();
+        if(sortType) {
+            System.out.println("Time Lapsed for QS by Size ASC: " + (endTime - startTime));
+        } else {
+            System.out.println("Time Lapsed for QS by Size DESC: " + (endTime - startTime));
+        }
+            
         
         for (TShirt shirt : shirts) {
             System.out.println(shirt);
         }
     }
-    
 }
