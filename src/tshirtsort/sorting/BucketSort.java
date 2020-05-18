@@ -14,7 +14,8 @@ import tshirtsort.models.TShirt;
  * @author mac
  */
 public class BucketSort {
-
+    List<TShirt>[] buckets;
+    
     // sortType = true - ASC, false = DESC
     // int sortByProperty 
     // sortByProperty == 1 -- Size
