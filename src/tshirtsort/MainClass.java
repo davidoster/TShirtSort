@@ -24,7 +24,7 @@ public class MainClass {
      */
     public static void main(String[] args) {
         TShirtFactory tFactory = new TShirtFactory();
-        List<TShirt> shirts = tFactory.tShirtGenerateX(3);
+        List<TShirt> shirts = tFactory.tShirtGenerateX(5);
         QuickSort qs = new QuickSort();
         BubbleSort bs = new BubbleSort();
         BucketSort bus = new BucketSort();
@@ -34,7 +34,8 @@ public class MainClass {
         }
 //        performQuickSort(qs, shirts);
 //        performBubbleSort(bs, shirts);
-        performBucketSort(bus, shirts);
+//        performBucketSort(bus, shirts);
+        performBucketSortPerProperty(bus, shirts);
         
     }
     
@@ -218,5 +219,63 @@ public class MainClass {
         for (TShirt shirt : sorted_shirts) {
             System.out.println(shirt);
         }
+    }
+    
+    public static void performBucketSortPerProperty(BucketSort bus, List<TShirt> shirts) {
+        /*
+        1. Make a BUS per Size
+        2. Find which TShirts have the same Size on the sorted (previous)list
+        3. Get the ones of the same Size in a sublist
+        4. Make a BUS per Color on the previous sublist
+        5. Find which TShirts have the same Color on the previous sorted list (from step 4)
+        6. Make a BUS per Fabric
+        */
+        
+        //List<TShirt> tshirts, int maxValue, boolean sortType, int sortByProperty
+        
+        // step 1
+        List<TShirt> shirtsBySize = bus.sort(shirts, 6, true, 1);
+        // step 2
+        int[] sBySize = new int[7];
+        for(int i = 0; i < 7; i++) {
+            sBySize[i] = 0;
+        }
+        for (TShirt tShirt : shirtsBySize) {
+            sBySize[tShirt.getSize().ordinal()]++; //sBySize[0] == 2
+        }
+        for (int i : sBySize) {
+            System.out.println("i : " + i);
+        }
+        TStruct[] allSizes = new TStruct[7];
+        int counter = 0; // shirts.get(counter) <-- 0 
+        for(int i = 0; i < 7; i++) {
+            allSizes[i] = new TStruct();
+            if(sBySize[i] == 0) {
+                allSizes[i].start = -1;
+                allSizes[i].end = -1;
+            } else {
+                allSizes[i].start = counter; // 0 
+                allSizes[i].end = counter + sBySize[i] - 1;
+            }
+            counter += sBySize[i];
+        }
+        int k = 0;
+        for (TStruct allSize : allSizes) {
+            System.out.println("k: " + k);
+            System.out.println("start: " + allSize.start + " end: " + allSize.end);
+            k++;
+            
+        }
+        // 0 (XS), 0 start, 1 end
+        // 1 (S) , 2 start, 4 end
+        // 2 (M) , 5 start, 8 end
+        // 3 (L) , 9 start, 10 end 
+        //shirtsBySize.subList(0, 1);
+        
+    }
+    
+    static class TStruct {
+        public int start;
+        public int end;
     }
 }
