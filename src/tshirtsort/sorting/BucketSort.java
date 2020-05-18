@@ -24,7 +24,7 @@ public class BucketSort {
         // Bucket Sort
         List<TShirt> sorted_tshirts = new ArrayList<>();
         List<TShirt>[] buckets = new ArrayList[maxValue + 1];
-        for (int i = 0; i < maxValue; i++) {
+        for (int i = 0; i <= maxValue; i++) {
             buckets[i] = new ArrayList<TShirt>();
         }
         for(int i = 0; i <= maxValue; i++) {
@@ -46,7 +46,7 @@ public class BucketSort {
             }
         }
         if(sortType == true) {
-            for(int i = 0; i < maxValue; i++) {
+            for(int i = 0; i <= maxValue; i++) {
                 for (int j = 0; j < buckets[i].size(); j++) {
                     sorted_tshirts.add(buckets[i].get(j));
                 }
