@@ -129,6 +129,6 @@ public class TShirt {
 
     @Override
     public String toString() {
-        return "TShirt{" + "name=" + name + ", color=" + color + ", size=" + size + ", fabric=" + fabric + ", price=" + price + '}';
+        return "TShirt{" + "name=" + name + ", size=" + size + ", color=" + color + ", fabric=" + fabric + ", price=" + price + '}';
     }
 }

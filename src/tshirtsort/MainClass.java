@@ -5,10 +5,12 @@
  */
 package tshirtsort;
 
+import java.util.ArrayList;
 import java.util.List;
 import tshirtsort.factories.TShirtFactory;
 import tshirtsort.models.TShirt;
 import tshirtsort.sorting.BubbleSort;
+import tshirtsort.sorting.BucketSort;
 import tshirtsort.sorting.QuickSort;
 
 /**
@@ -25,18 +27,15 @@ public class MainClass {
         List<TShirt> shirts = tFactory.tShirtGenerateX(3);
         QuickSort qs = new QuickSort();
         BubbleSort bs = new BubbleSort();
-        // BucketSort bus = new BucketSort();
+        BucketSort bus = new BucketSort();
 
         for (TShirt shirt : shirts) {
             System.out.println(shirt);
         }
-        performQuickSort(qs, shirts);
-        performBubbleSort(bs, shirts);
+//        performQuickSort(qs, shirts);
+//        performBubbleSort(bs, shirts);
+        performBucketSort(bus, shirts);
         
-        
-        
-        
-
     }
     
     public static void performQuickSort(QuickSort qs, List<TShirt> shirts) {
@@ -60,6 +59,17 @@ public class MainClass {
         
         bubbleSort(bs, shirts, true, 3);
         bubbleSort(bs, shirts, false, 3);
+    }
+    
+    public static void performBucketSort(BucketSort bus, List<TShirt> shirts) {
+        bucketSort(bus, shirts, true, 1);
+        bucketSort(bus, shirts, false, 1);
+        
+        bucketSort(bus, shirts, true, 2);
+        bucketSort(bus, shirts, false, 2);
+        
+        bucketSort(bus, shirts, true, 3);
+        bucketSort(bus, shirts, false, 3);
     }
     
     // quicksort
@@ -161,7 +171,52 @@ public class MainClass {
     }
     
     // bucketSort
-    public static void bucketSort(QuickSort qs, List<TShirt> shirts, boolean sortType, int sortByProperty) {
-        
+    public static void bucketSort(BucketSort bus, List<TShirt> shirts, boolean sortType, int sortByProperty) {
+        System.out.println("/// --------- ///");
+        long startTime = 0;
+        long endTime = 0;
+        List<TShirt> sorted_shirts = new ArrayList<>();
+        switch (sortByProperty) {
+            // Size - 1
+            case 1:
+                startTime = System.currentTimeMillis();
+                sorted_shirts = bus.sort(shirts, 6, sortType, 1);
+                endTime = System.currentTimeMillis();
+
+                if (sortType) {
+                    System.out.println("Time Lapsed for BUS by Size ASC: " + (endTime - startTime));
+                } else {
+                    System.out.println("Time Lapsed for BUS by Size DESC: " + (endTime - startTime));
+                }
+                break;
+            // Color - 2
+            case 2:
+                startTime = System.currentTimeMillis();
+                sorted_shirts = bus.sort(shirts, 6, sortType, 2);
+                endTime = System.currentTimeMillis();
+
+                if (sortType) {
+                    System.out.println("Time Lapsed for BUS by Color ASC: " + (endTime - startTime));
+                } else {
+                    System.out.println("Time Lapsed for BUS by Color DESC: " + (endTime - startTime));
+                }
+                break;
+            // Fabric - 3
+            case 3:
+                startTime = System.currentTimeMillis();
+                sorted_shirts = bus.sort(shirts, 6, sortType, 3);
+                endTime = System.currentTimeMillis();
+
+                if (sortType) {
+                    System.out.println("Time Lapsed for BUS by Fabric ASC: " + (endTime - startTime));
+                } else {
+                    System.out.println("Time Lapsed for BUS by Fabric DESC: " + (endTime - startTime));
+                }
+                break;
+        }
+
+        for (TShirt shirt : sorted_shirts) {
+            System.out.println(shirt);
+        }
     }
 }
