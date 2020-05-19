@@ -230,12 +230,12 @@ public class MainClass {
         5. Find which TShirts have the same Color on the previous sorted list (from step 4)
         6. Make a BUS per Fabric
         */
+        List<List<TShirt>> subLists = new ArrayList<List<TShirt>>(); // instantiate a List of Lists!
         
-        //List<TShirt> tshirts, int maxValue, boolean sortType, int sortByProperty
-        
-        // step 1
+        // step 1 - Make a BUS per Size
         List<TShirt> shirtsBySize = bus.sort(shirts, 6, true, 1);
-        // step 2
+        
+        // step 2 - Find which TShirts have the same Size on the sorted (previous)list
         int[] sBySize = new int[7];
         for(int i = 0; i < 7; i++) {
             sBySize[i] = 0;
@@ -246,6 +246,8 @@ public class MainClass {
         for (int i : sBySize) {
             System.out.println("i : " + i);
         }
+        
+        // step 3 - Get the ones of the same Size in a sublist
         TStruct[] allSizes = new TStruct[7];
         int counter = 0; // shirts.get(counter) <-- 0 
         for(int i = 0; i < 7; i++) {
@@ -256,16 +258,41 @@ public class MainClass {
             } else {
                 allSizes[i].start = counter; // 0 
                 allSizes[i].end = counter + sBySize[i] - 1;
+                subLists.add(shirtsBySize.subList(allSizes[i].start, allSizes[i].end)); // this line isn't correct we need to correct it
             }
             counter += sBySize[i];
         }
-        int k = 0;
-        for (TStruct allSize : allSizes) {
-            System.out.println("k: " + k);
-            System.out.println("start: " + allSize.start + " end: " + allSize.end);
-            k++;
-            
+        
+        // step 4 - Make a BUS per Color on the previous sublist
+        // step 5 - Find which TShirts have the same Color on the previous sorted list (from step 4) (TOGETHER because of the List of Lists
+        List<Integer[]> sByColor = new ArrayList<Integer[]>();
+        for(int i = 0; i <= subLists.size(); i++) {
+            sByColor.add(new Integer[7]);
+            Integer[] t = new Integer[7];
+            for (Integer integer : sByColor.get(sByColor.size() - 1)) {
+                integer = 0;
+            }
         }
+        int sByColorCounter = 0;
+        for(List<TShirt> sList: subLists) {
+            List<TShirt> shirtsByColor = bus.sort(sList, 6, true, 2);
+            for(TShirt tShirt : sList) {
+                Integer[] t =  sByColor.get(sByColorCounter);
+                if(t[tShirt.getColor().ordinal()] == null) t[tShirt.getColor().ordinal()] = 0;
+                t[tShirt.getColor().ordinal()]++;
+            }
+            sByColorCounter++;
+        }
+        counter = 0;
+        for (Integer[] integers : sByColor) {
+            System.out.println("counter: " + counter);
+            for (Integer integer : integers) {
+                System.out.println("i : " + integer);
+            }
+        }
+        
+        // go to these subLists and make a sort
+
         // 0 (XS), 0 start, 1 end
         // 1 (S) , 2 start, 4 end
         // 2 (M) , 5 start, 8 end
